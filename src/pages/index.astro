@@ -9,7 +9,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 ---
-<Base title="Home" description="Yuhang Zhang — builder of agents & ideas. Investing at M12, shipping agents in SF.">
+<Base title="Home" description="Yuhang Zhang — lover of ideas, humantiy, art. Investing at M12, shipping agents in SF.">
 
   <!-- ── HERO ── -->
   <section class="relative py-12 sm:py-20">
@@ -30,7 +30,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
       <div class="flex items-center gap-3 mb-6">
         <DoodleSquiggle color="#FF6B35" />
         <p class="font-display text-2xl sm:text-3xl font-semibold text-[#FF6B35]">
-          builder of agents &amp; ideas ✦
+          lover of ideas &amp; humanity &amp; art ✦
         </p>
       </div>
 
