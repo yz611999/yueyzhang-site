@@ -9,7 +9,7 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
   .slice(0, 3);
 ---
-<Base title="Home" description="Yuhang Zhang — lover of ideas, humantiy, art. Investing at M12, shipping agents in SF.">
+<Base title="Home" description="Yuhang Zhang — lover of ideas, humantiy, art. Investing at M12.">
 
   <!-- ── HERO ── -->
   <section class="relative py-12 sm:py-20">
@@ -39,9 +39,8 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
         <p class="font-body text-lg text-gray-800 leading-relaxed">
           Currently building in SF 🌉<br />
           <strong>Investing at M12</strong> (Microsoft's VC fund) by day,<br />
-          <strong>shipping agents</strong> by night.<br /><br />
-          Obsessed with what one person can build when AI removes the friction.
-          Taste + judgment as the new competitive moat.
+          <strong>rewriting the world</strong> by night.<br /><br />
+          Just trying to make the world a more beautiful place.
         </p>
       </div>
 
