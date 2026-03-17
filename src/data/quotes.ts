@@ -1,16 +1,46 @@
 // ✏️ YOUR QUOTES DATABASE
 // Edit this file to change the rotating quotes on the home page.
-// Add as many as you like — one quote per object.
+// Each quote needs a "text" and an "author".
 
 export const quotes = [
-  "The best time to build was yesterday. The second best time is now.",
-  "Taste + judgment are the new competitive moat.",
-  "One person with the right tools can do what a team of ten couldn't a decade ago.",
-  "Ship something real. Polish is a strategy, not a prerequisite.",
-  "The future belongs to people who can think AND build.",
-  "Agents don't replace ambition — they amplify it.",
-  "Every great company started as someone's side project.",
-  "The friction is gone. The only thing left is will.",
-  "Build in public. Learn in public. Win in public.",
-  "The best investment thesis is the one you're living inside of.",
+  {
+    text: "It is a truth universally acknowledged, that a single man in possession of a good fortune, must be in want of a wife.",
+    author: "Jane Austen, Pride and Prejudice",
+  },
+  {
+    text: "All animals are equal, but some animals are more equal than others.",
+    author: "George Orwell, Animal Farm",
+  },
+  {
+    text: "It was the best of times, it was the worst of times.",
+    author: "Charles Dickens, A Tale of Two Cities",
+  },
+  {
+    text: "To be, or not to be, that is the question.",
+    author: "William Shakespeare, Hamlet",
+  },
+  {
+    text: "Not all those who wander are lost.",
+    author: "J.R.R. Tolkien, The Fellowship of the Ring",
+  },
+  {
+    text: "It does not do to dwell on dreams and forget to live.",
+    author: "J.K. Rowling, Harry Potter and the Sorcerer's Stone",
+  },
+  {
+    text: "In the beginning was the Word, and the Word was with God, and the Word was God.",
+    author: "The Bible, John 1:1",
+  },
+  {
+    text: "Whatever our souls are made of, his and mine are the same.",
+    author: "Emily Brontë, Wuthering Heights",
+  },
+  {
+    text: "The only way out of the labyrinth of suffering is to forgive.",
+    author: "John Green, Looking for Alaska",
+  },
+  {
+    text: "So we beat on, boats against the current, borne back ceaselessly into the past.",
+    author: "F. Scott Fitzgerald, The Great Gatsby",
+  },
 ];

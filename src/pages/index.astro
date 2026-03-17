@@ -20,13 +20,21 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
     <DoodleStar color="#FF6B35" size={20} class="absolute top-8 left-4 opacity-50 rotate-45" />
 
     <!-- Rotating quote panel (right side on large screens) -->
-    <div id="quote-panel" class="hidden lg:flex absolute right-0 top-12 w-72 flex-col items-start">
+    <div id="quote-panel" class="hidden lg:block absolute right-0 top-8 w-72">
       <div class="font-display text-sm text-gray-400 mb-2 flex items-center gap-1">
         <DoodleSquiggle color="#B8D4E8" />
-        <span>things i believe</span>
+        <span>from the classics</span>
       </div>
-      <div class="card-sketch rotate-pos-1 p-5 w-full relative overflow-hidden min-h-[100px] flex items-center">
-        <p id="quote-text" class="font-display text-lg text-gray-800 leading-snug"></p>
+      <!-- Graph-lined notecard -->
+      <div class="card-sketch rotate-pos-1 relative overflow-hidden" style="background: white; min-height: 160px;">
+        <!-- Horizontal graph lines inside card -->
+        <div class="absolute inset-0 pointer-events-none" style="background-image: repeating-linear-gradient(to bottom, transparent, transparent 27px, #bfdbfe 27px, #bfdbfe 28px); background-position: 0 8px;"></div>
+        <div class="relative z-10 p-5 pt-4">
+          <p id="quote-text" class="quote-handwritten text-gray-900 leading-[28px] min-h-[84px]"></p>
+          <p id="quote-author" class="quote-author text-[#FF6B35] mt-2 text-sm"></p>
+        </div>
+        <!-- Eraser overlay -->
+        <div id="eraser" class="absolute inset-0 pointer-events-none opacity-0" style="background: white;"></div>
       </div>
     </div>
 
@@ -126,34 +134,74 @@ const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
 
 
 <script define:vars={{ quotes }}>
-  const el = document.getElementById('quote-text');
+  const textEl = document.getElementById('quote-text');
+  const authorEl = document.getElementById('quote-author');
+  const eraser = document.getElementById('eraser');
   let current = 0;
+  let writeTimer = null;
 
-  function typeText(text) {
-    el.textContent = '';
+  // Write text character by character with slight random speed variation (pencil feel)
+  function writeText(text, onDone) {
+    textEl.textContent = '';
     let i = 0;
-    const typeInterval = setInterval(() => {
-      el.textContent += text[i];
+    function writeNext() {
+      if (i >= text.length) { onDone && onDone(); return; }
+      textEl.textContent += text[i];
       i++;
-      if (i >= text.length) clearInterval(typeInterval);
-    }, 35);
+      // Slight rhythm variation — pause longer on punctuation
+      const ch = text[i - 1];
+      const delay = ['.', ',', '!', '?'].includes(ch) ? 120 + Math.random() * 80
+                  : [' '].includes(ch) ? 40 + Math.random() * 20
+                  : 30 + Math.random() * 30;
+      writeTimer = setTimeout(writeNext, delay);
+    }
+    writeNext();
   }
 
-  function eraseText() {
-    let text = el.textContent;
-    const eraseInterval = setInterval(() => {
-      text = text.slice(0, -1);
-      el.textContent = text;
-      if (text.length === 0) {
-        clearInterval(eraseInterval);
+  // Write author in after quote finishes
+  function writeAuthor(text) {
+    authorEl.textContent = '';
+    let i = 0;
+    function next() {
+      if (i >= text.length) return;
+      authorEl.textContent += text[i++];
+      setTimeout(next, 25 + Math.random() * 20);
+    }
+    setTimeout(next, 300);
+  }
+
+  // Eraser: sweep a white block left→right across the card, then clear
+  function eraseAndNext() {
+    eraser.style.transition = 'none';
+    eraser.style.opacity = '1';
+    eraser.style.transform = 'translateX(-100%)';
+    // Force reflow
+    eraser.getBoundingClientRect();
+    eraser.style.transition = 'transform 0.8s cubic-bezier(0.4,0,0.2,1)';
+    eraser.style.transform = 'translateX(0%)';
+
+    setTimeout(() => {
+      textEl.textContent = '';
+      authorEl.textContent = '';
+      // Slide eraser back off to the right
+      eraser.style.transition = 'transform 0.4s ease-in';
+      eraser.style.transform = 'translateX(100%)';
+      setTimeout(() => {
+        eraser.style.opacity = '0';
+        eraser.style.transform = 'translateX(-100%)';
         current = (current + 1) % quotes.length;
-        setTimeout(() => typeText(quotes[current]), 400);
-      }
-    }, 20);
+        showQuote();
+      }, 420);
+    }, 900);
   }
 
-  // Start
-  typeText(quotes[current]);
-  setInterval(eraseText, 30000);
+  function showQuote() {
+    const q = quotes[current];
+    writeText(q.text, () => writeAuthor('— ' + q.author));
+  }
+
+  // Start first quote, cycle every 30s
+  showQuote();
+  setInterval(eraseAndNext, 30000);
 </script>
 </Base>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&family=Architects+Daughter&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -129,6 +129,20 @@ nav a:hover {
 .prose a {
   color: #FF6B35;
   text-decoration: underline;
+}
+
+/* ── Quote handwritten font ── */
+.quote-handwritten {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 0.95rem;
+  line-height: 28px;
+  color: #1a1a2e;
+}
+
+.quote-author {
+  font-family: 'Architects Daughter', cursive;
+  font-size: 0.8rem;
+  opacity: 0.75;
 }
 
 /* ── Doodle accent ── */
