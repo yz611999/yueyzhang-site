@@ -1,0 +1,79 @@
+---
+import Base from '../../layouts/Base.astro';
+import DoodleSquiggle from '../../components/DoodleSquiggle.astro';
+import DoodleStar from '../../components/DoodleStar.astro';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+---
+<Base title={post.data.title} description={post.data.description}>
+
+  <article class="py-10">
+
+    <!-- Back link -->
+    <a href="/writing" class="font-body text-sm text-gray-500 hover:text-[#FF6B35] inline-flex items-center gap-1 mb-8 transition-colors">
+      ← All posts
+    </a>
+
+    <!-- Post header -->
+    <header class="mb-10 relative">
+      <DoodleStar color="#FF6B35" size={28} class="absolute -top-4 right-4 rotate-12 hidden sm:block" />
+
+      <div class="flex flex-wrap gap-2 mb-4">
+        {post.data.tags.map(tag => (
+          <span class="text-xs font-body px-2 py-0.5 bg-[#6BCB77]/20 border border-[#6BCB77] rounded-full text-gray-700">
+            {tag}
+          </span>
+        ))}
+      </div>
+
+      <h1 class="font-display text-4xl sm:text-5xl font-bold text-black leading-tight mb-4">
+        {post.data.title}
+      </h1>
+
+      <div class="flex items-center gap-4 text-gray-500">
+        <span class="font-body text-sm">
+          {post.data.pubDate.toLocaleDateString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </span>
+        {post.data.updatedDate && (
+          <span class="font-body text-xs text-gray-400">
+            (updated {post.data.updatedDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })})
+          </span>
+        )}
+      </div>
+
+      <DoodleSquiggle color="#FF6B35" class="mt-4" />
+    </header>
+
+    <!-- Post content -->
+    <div class="card-sketch p-6 sm:p-10 prose prose-lg max-w-none">
+      <Content />
+    </div>
+
+    <!-- Footer nav -->
+    <div class="mt-12 flex justify-between items-center">
+      <a href="/writing" class="btn-sketch btn-white font-display text-lg">
+        ← Back to Writing
+      </a>
+      <a href="/" class="btn-sketch btn-green font-display text-lg">
+        Home
+      </a>
+    </div>
+
+  </article>
+
+</Base>

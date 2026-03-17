@@ -1,0 +1,116 @@
+---
+import Base from '../layouts/Base.astro';
+import DoodleStar from '../components/DoodleStar.astro';
+import DoodleArrow from '../components/DoodleArrow.astro';
+import DoodleSquiggle from '../components/DoodleSquiggle.astro';
+import { getCollection } from 'astro:content';
+
+const recentPosts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf())
+  .slice(0, 3);
+---
+<Base title="Home" description="Yuhang Zhang — builder of agents & ideas. Investing at M12, shipping agents in SF.">
+
+  <!-- ── HERO ── -->
+  <section class="relative py-12 sm:py-20">
+    <!-- Doodle decorations -->
+    <DoodleStar color="#FF6B35" size={36} class="absolute top-4 right-8 opacity-80 rotate-12" />
+    <DoodleStar color="#6BCB77" size={24} class="absolute top-16 right-24 opacity-60 -rotate-6" />
+    <DoodleStar color="#FF6B35" size={20} class="absolute top-8 left-4 opacity-50 rotate-45" />
+
+    <div class="max-w-2xl">
+      <!-- Name -->
+      <div class="flex items-center gap-3 mb-2">
+        <h1 class="font-display text-6xl sm:text-7xl font-bold text-black leading-tight">
+          Yuhang Zhang
+        </h1>
+      </div>
+
+      <!-- Tagline -->
+      <div class="flex items-center gap-3 mb-6">
+        <DoodleSquiggle color="#FF6B35" />
+        <p class="font-display text-2xl sm:text-3xl font-semibold text-[#FF6B35]">
+          builder of agents &amp; ideas ✦
+        </p>
+      </div>
+
+      <!-- Bio -->
+      <div class="card-sketch rotate-neg-1 p-6 mb-8 max-w-xl">
+        <p class="font-body text-lg text-gray-800 leading-relaxed">
+          Currently building in SF 🌉<br />
+          <strong>Investing at M12</strong> (Microsoft's VC fund) by day,<br />
+          <strong>shipping agents</strong> by night.<br /><br />
+          Obsessed with what one person can build when AI removes the friction.
+          Taste + judgment as the new competitive moat.
+        </p>
+      </div>
+
+      <!-- CTA buttons -->
+      <div class="flex flex-wrap items-center gap-4">
+        <a href="/projects" class="btn-sketch btn-green">
+          🛠 Projects
+        </a>
+        <DoodleArrow color="#6BCB77" />
+        <a href="/writing" class="btn-sketch btn-orange">
+          ✍️ Writing
+        </a>
+        <DoodleArrow color="#FF6B35" />
+        <a href="https://linkedin.com/in/yuhangzhang99" target="_blank" rel="noopener" class="btn-sketch btn-white">
+          LinkedIn ↗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── DIVIDER ── -->
+  <div class="flex items-center gap-4 my-10">
+    <div class="flex-1 border-t-2 border-black"></div>
+    <DoodleStar color="#6BCB77" size={28} />
+    <div class="flex-1 border-t-2 border-black"></div>
+  </div>
+
+  <!-- ── RECENT WRITING ── -->
+  {recentPosts.length > 0 && (
+    <section class="mb-12">
+      <h2 class="font-display text-4xl font-bold mb-6 flex items-center gap-3">
+        Recent Writing
+        <DoodleSquiggle color="#B8D4E8" class="hidden sm:block" />
+      </h2>
+      <div class="grid gap-5">
+        {recentPosts.map((post, i) => (
+          <a
+            href={`/writing/${post.slug}`}
+            class={`card-sketch p-5 block no-underline group ${
+              i % 3 === 0 ? 'rotate-neg-1' : i % 3 === 1 ? 'rotate-pos-1' : 'rotate-neg-2'
+            }`}
+          >
+            <div class="flex items-start justify-between gap-4">
+              <div>
+                <h3 class="font-display text-2xl font-semibold text-black group-hover:text-[#FF6B35] transition-colors">
+                  {post.data.title}
+                </h3>
+                <p class="font-body text-gray-600 mt-1 text-sm">{post.data.description}</p>
+                <div class="flex flex-wrap gap-2 mt-2">
+                  {post.data.tags.map(tag => (
+                    <span class="text-xs font-body px-2 py-0.5 bg-[#B8D4E8]/40 border border-[#B8D4E8] rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <span class="font-body text-sm text-gray-400 shrink-0 mt-1">
+                {post.data.pubDate.toLocaleDateString('en-US', { month: 'short', year: 'numeric' })}
+              </span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div class="mt-6">
+        <a href="/writing" class="btn-sketch btn-white font-display text-lg">
+          All posts →
+        </a>
+      </div>
+    </section>
+  )}
+
+</Base>

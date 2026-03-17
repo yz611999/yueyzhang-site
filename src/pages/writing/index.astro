@@ -1,0 +1,64 @@
+---
+import Base from '../../layouts/Base.astro';
+import DoodleStar from '../../components/DoodleStar.astro';
+import DoodleSquiggle from '../../components/DoodleSquiggle.astro';
+import { getCollection } from 'astro:content';
+
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
+---
+<Base title="Writing" description="Essays and notes from Yuhang Zhang on AI agents, VC, and building things.">
+
+  <section class="py-10">
+    <div class="mb-10 relative">
+      <DoodleStar color="#6BCB77" size={30} class="absolute -top-2 right-2 sm:right-12 -rotate-6" />
+      <h1 class="font-display text-6xl font-bold mb-3">Writing</h1>
+      <div class="flex items-center gap-3">
+        <DoodleSquiggle color="#FF6B35" />
+        <p class="font-body text-lg text-gray-600">thinking out loud — on agents, VC, and building</p>
+      </div>
+    </div>
+
+    {posts.length === 0 ? (
+      <p class="font-body text-gray-500 text-lg">No posts yet. Coming soon! 📝</p>
+    ) : (
+      <div class="grid gap-5">
+        {posts.map((post, i) => (
+          <a
+            href={`/writing/${post.slug}`}
+            class={`card-sketch p-6 block no-underline group ${
+              i % 3 === 0 ? 'rotate-neg-1' : i % 3 === 1 ? 'rotate-pos-1' : 'rotate-neg-2'
+            }`}
+          >
+            <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2">
+              <div class="flex-1">
+                <h2 class="font-display text-2xl sm:text-3xl font-semibold text-black group-hover:text-[#FF6B35] transition-colors">
+                  {post.data.title}
+                </h2>
+                <p class="font-body text-gray-600 mt-2 text-base">{post.data.description}</p>
+                <div class="flex flex-wrap gap-2 mt-3">
+                  {post.data.tags.map(tag => (
+                    <span class="text-xs font-body px-2 py-0.5 bg-[#B8D4E8]/40 border border-[#B8D4E8] rounded-full text-gray-600">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div class="shrink-0 text-right">
+                <span class="font-body text-sm text-gray-400">
+                  {post.data.pubDate.toLocaleDateString('en-US', {
+                    month: 'long',
+                    day: 'numeric',
+                    year: 'numeric',
+                  })}
+                </span>
+              </div>
+            </div>
+          </a>
+        ))}
+      </div>
+    )}
+
+  </section>
+
+</Base>

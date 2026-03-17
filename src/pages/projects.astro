@@ -1,0 +1,81 @@
+---
+import Base from '../layouts/Base.astro';
+import DoodleStar from '../components/DoodleStar.astro';
+import DoodleRocket from '../components/DoodleRocket.astro';
+import DoodleSquiggle from '../components/DoodleSquiggle.astro';
+import { projects } from '../data/projects';
+---
+<Base title="Projects" description="Things Yuhang Zhang has built — AI agents, tools, and experiments.">
+
+  <section class="py-10">
+    <!-- Header -->
+    <div class="mb-10 relative">
+      <DoodleStar color="#FF6B35" size={32} class="absolute -top-2 right-0 sm:right-8 rotate-12" />
+      <DoodleStar color="#6BCB77" size={20} class="absolute top-8 right-8 sm:right-16 -rotate-12" />
+      <h1 class="font-display text-6xl font-bold mb-3">Projects</h1>
+      <div class="flex items-center gap-3">
+        <DoodleSquiggle color="#6BCB77" />
+        <p class="font-body text-lg text-gray-600">things I've built, shipped, and tinkered with</p>
+      </div>
+    </div>
+
+    <!-- Project grid -->
+    {projects.length > 0 ? (
+      <div class="grid sm:grid-cols-2 gap-6 mb-12">
+        {projects.map((project, i) => (
+          <div class={`card-sketch p-6 ${i % 4 === 0 ? 'rotate-neg-1' : i % 4 === 1 ? 'rotate-pos-1' : i % 4 === 2 ? 'rotate-neg-2' : 'rotate-pos-2'}`}>
+            <div class="flex items-start justify-between mb-3">
+              <span class="text-3xl">{project.emoji}</span>
+              <span class={`font-body text-xs px-2 py-0.5 rounded-full border ${
+                project.status === 'live'
+                  ? 'bg-[#6BCB77]/20 border-[#6BCB77] text-green-700'
+                  : project.status === 'wip'
+                  ? 'bg-[#FF6B35]/20 border-[#FF6B35] text-orange-700'
+                  : 'bg-[#B8D4E8]/20 border-[#B8D4E8] text-blue-700'
+              }`}>
+                {project.status === 'live' ? '✓ live' : project.status === 'wip' ? '⚙ WIP' : '💡 concept'}
+              </span>
+            </div>
+            <h2 class="font-display text-2xl font-bold mb-2">{project.title}</h2>
+            <p class="font-body text-gray-600 text-sm mb-4">{project.description}</p>
+            <div class="flex flex-wrap gap-2 mb-4">
+              {project.tags.map(tag => (
+                <span class="text-xs font-body px-2 py-0.5 bg-[#B8D4E8]/40 border border-[#B8D4E8] rounded-full">
+                  {tag}
+                </span>
+              ))}
+            </div>
+            <div class="flex gap-3">
+              {project.url && (
+                <a href={project.url} target="_blank" rel="noopener" class="btn-sketch btn-green text-sm py-1 px-3 font-display text-base">
+                  Visit ↗
+                </a>
+              )}
+              {project.github && (
+                <a href={project.github} target="_blank" rel="noopener" class="btn-sketch btn-white text-sm py-1 px-3 font-display text-base">
+                  GitHub
+                </a>
+              )}
+            </div>
+          </div>
+        ))}
+      </div>
+    ) : null}
+
+    <!-- Coming soon placeholder -->
+    <div class="card-sketch rotate-neg-1 p-10 flex flex-col items-center justify-center text-center gap-4 max-w-md mx-auto">
+      <DoodleRocket size={100} />
+      <h2 class="font-display text-3xl font-bold">More coming soon 🚀</h2>
+      <p class="font-body text-gray-500 text-base">
+        I'm busy building. Check back soon — or follow along on{' '}
+        <a href="https://twitter.com/" class="text-[#FF6B35] underline" target="_blank" rel="noopener">Twitter/X</a>{' '}
+        for live updates.
+      </p>
+      <a href="/writing" class="btn-sketch btn-orange mt-2">
+        Read about what I'm building →
+      </a>
+    </div>
+
+  </section>
+
+</Base>

@@ -1,0 +1,150 @@
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&family=Patrick+Hand&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Graph paper background ── */
+:root {
+  --grid-color: #B8D4E8;
+  --grid-size: 28px;
+  --grid-thick: 112px; /* every 4 lines = thick line */
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Patrick Hand', cursive;
+  background-color: #ffffff;
+  background-image:
+    /* thick grid lines every 4 cells */
+    linear-gradient(to right, #92c4e0 1px, transparent 1px),
+    linear-gradient(to bottom, #92c4e0 1px, transparent 1px),
+    /* thin grid lines */
+    linear-gradient(to right, var(--grid-color) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px);
+  background-size:
+    var(--grid-thick) var(--grid-thick),
+    var(--grid-thick) var(--grid-thick),
+    var(--grid-size) var(--grid-size),
+    var(--grid-size) var(--grid-size);
+  min-height: 100vh;
+}
+
+/* ── Typography ── */
+h1, h2, h3, h4, h5 {
+  font-family: 'Caveat', cursive;
+}
+
+/* ── Sketchy card style ── */
+.card-sketch {
+  background: white;
+  border: 2.5px solid #111;
+  border-radius: 4px;
+  box-shadow: 4px 4px 0px #111;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.card-sketch:hover {
+  transform: translate(-2px, -2px) rotate(0deg);
+  box-shadow: 6px 6px 0px #111;
+}
+
+/* Wobbly rotations for cards — applied via utility classes */
+.rotate-neg-1 { transform: rotate(-1deg); }
+.rotate-pos-1 { transform: rotate(1deg); }
+.rotate-neg-2 { transform: rotate(-0.5deg); }
+.rotate-pos-2 { transform: rotate(0.8deg); }
+
+/* ── Sketchy button ── */
+.btn-sketch {
+  font-family: 'Caveat', cursive;
+  font-size: 1.2rem;
+  font-weight: 700;
+  border: 2.5px solid #111;
+  box-shadow: 3px 3px 0px #111;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+  cursor: pointer;
+  display: inline-block;
+  padding: 0.5rem 1.4rem;
+  border-radius: 4px;
+  text-decoration: none;
+}
+
+.btn-sketch:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0px #111;
+}
+
+.btn-sketch:active {
+  transform: translate(1px, 1px);
+  box-shadow: 2px 2px 0px #111;
+}
+
+.btn-green {
+  background-color: #6BCB77;
+  color: #111;
+}
+
+.btn-orange {
+  background-color: #FF6B35;
+  color: #fff;
+}
+
+.btn-white {
+  background-color: #fff;
+  color: #111;
+}
+
+/* ── Nav ── */
+nav a {
+  font-family: 'Caveat', cursive;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #111;
+  text-decoration: none;
+  padding: 0.2rem 0.5rem;
+  border-radius: 3px;
+  transition: background 0.12s;
+}
+
+nav a:hover {
+  background: #6BCB77;
+}
+
+/* ── Prose overrides for blog posts ── */
+.prose {
+  font-family: 'Patrick Hand', cursive;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #111;
+}
+
+.prose h1, .prose h2, .prose h3 {
+  font-family: 'Caveat', cursive;
+}
+
+.prose a {
+  color: #FF6B35;
+  text-decoration: underline;
+}
+
+/* ── Doodle accent ── */
+.doodle-underline {
+  position: relative;
+  display: inline-block;
+}
+
+.doodle-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: #FF6B35;
+  border-radius: 2px;
+  transform: rotate(-0.5deg);
+}

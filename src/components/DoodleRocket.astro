@@ -1,0 +1,26 @@
+---
+export interface Props {
+  size?: number;
+  class?: string;
+}
+const { size = 80, class: cls = '' } = Astro.props;
+---
+<svg width={size} height={size} viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg" class={cls} aria-hidden="true">
+  <!-- Body -->
+  <path d="M40 8 C30 18, 26 34, 28 52 L40 58 L52 52 C54 34, 50 18, 40 8 Z"
+    fill="#fff" stroke="#111" stroke-width="2" stroke-linejoin="round"/>
+  <!-- Window -->
+  <circle cx="40" cy="30" r="7" fill="#B8D4E8" stroke="#111" stroke-width="2"/>
+  <!-- Left fin -->
+  <path d="M28 52 L18 64 L32 58 Z" fill="#FF6B35" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Right fin -->
+  <path d="M52 52 L62 64 L48 58 Z" fill="#FF6B35" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Flame -->
+  <path d="M34 58 C36 68, 38 72, 40 76 C42 72, 44 68, 46 58"
+    fill="#6BCB77" stroke="#111" stroke-width="1.5" stroke-linejoin="round"/>
+  <!-- Small stars around rocket -->
+  <path d="M14 20 L15 17 L16 20 L19 21 L16 22 L15 25 L14 22 L11 21 Z"
+    fill="#FF6B35" stroke="#111" stroke-width="1"/>
+  <path d="M62 14 L63 12 L64 14 L66 15 L64 16 L63 18 L62 16 L60 15 Z"
+    fill="#6BCB77" stroke="#111" stroke-width="1"/>
+</svg>

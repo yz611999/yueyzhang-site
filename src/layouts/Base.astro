@@ -1,0 +1,56 @@
+---
+export interface Props {
+  title: string;
+  description?: string;
+}
+
+const { title, description = "builder of agents & ideas — Yuhang Zhang" } = Astro.props;
+---
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title} | yuhang.build</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <!-- Google Fonts loaded in global CSS via @import -->
+</head>
+<body class="min-h-screen">
+  <!-- NAV -->
+  <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm border-b-2 border-black">
+    <nav class="max-w-4xl mx-auto px-4 py-3 flex items-center justify-between">
+      <a href="/" class="font-display text-2xl font-bold text-black hover:text-[#FF6B35] transition-colors no-underline">
+        yuhang.build ✏️
+      </a>
+      <div class="flex gap-2 sm:gap-4">
+        <a href="/">Home</a>
+        <a href="/projects">Projects</a>
+        <a href="/writing">Writing</a>
+      </div>
+    </nav>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="max-w-4xl mx-auto px-4 py-10">
+    <slot />
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="border-t-2 border-black mt-16 py-8">
+    <div class="max-w-4xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <span class="font-display text-xl text-black">yuhang.build</span>
+      <div class="flex gap-4 text-sm font-body text-gray-600">
+        <a href="https://twitter.com/" target="_blank" rel="noopener" class="hover:text-[#FF6B35]">Twitter/X</a>
+        <a href="https://linkedin.com/in/yuhangzhang99" target="_blank" rel="noopener" class="hover:text-[#FF6B35]">LinkedIn</a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="hover:text-[#FF6B35]">GitHub</a>
+      </div>
+      <span class="font-body text-sm text-gray-500">© {new Date().getFullYear()} Yuhang Zhang</span>
+    </div>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  @import '../styles/global.css';
+</style>
